@@ -1,0 +1,540 @@
+{% extends "base.html" %}
+
+{% block title %}X-TREME | My Profile{% endblock %}
+
+{% block additional_styles %}
+/* Profile page styles */
+.profile-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.profile-sidebar {
+    flex: 0 0 280px;
+}
+
+.profile-main {
+    flex: 1;
+    min-width: 300px;
+}
+
+.profile-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.profile-header {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 20px;
+    position: relative;
+}
+
+.profile-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 4px solid white;
+    margin: -60px auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-avatar i {
+    font-size: 50px;
+    color: var(--text-light);
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-upload {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 12px;
+    padding: 4px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.profile-avatar:hover .avatar-upload {
+    opacity: 1;
+}
+
+.profile-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.profile-email {
+    color: var(--text-medium);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-medium);
+}
+
+.profile-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.profile-nav-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-nav-item:last-child {
+    border-bottom: none;
+}
+
+.profile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.profile-nav-link:hover {
+    background-color: #f9f5f3;
+}
+
+.profile-nav-link.active {
+    background-color: #f9f5f3;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.profile-nav-link i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-col {
+    flex: 1;
+}
+
+.form-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 15px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.btn:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.points-history {
+    margin-top: 30px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-details {
+    flex: 1;
+}
+
+.history-title {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.history-date {
+    font-size: 12px;
+    color: var(--text-medium);
+}
+
+.history-points {
+    font-weight: 600;
+}
+
+.points-positive {
+    color: #28a745;
+}
+
+.points-negative {
+    color: #dc3545;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+    }
+    
+    .profile-sidebar {
+        flex: 0 0 100%;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Profile Sidebar -->
+    <div class="profile-sidebar">
+        <div class="profile-card">
+            <div class="profile-header">
+                <h2 class="profile-title">My Profile</h2>
+            </div>
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+                <div class="avatar-upload">
+                    <label for="avatar-input">Change Photo</label>
+                    <input type="file" id="avatar-input" style="display: none;">
+                </div>
+            </div>
+            <div class="profile-info">
+                <div class="profile-name">{{ current_user.fullname }}</div>
+                <div class="profile-email">{{ current_user.email }}</div>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value">{{ current_user.points }}</div>
+                        <div class="stat-label">Points</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">{{ current_user.items_exchanged }}</div>
+                        <div class="stat-label">Exchanges</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">{{ current_user.items_listed }}</div>
+                        <div class="stat-label">Listed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-card">
+            <ul class="profile-nav">
+                <li class="profile-nav-item">
+                    <a href="#" class="profile-nav-link active">
+                        <i class="fas fa-user-edit"></i> Edit Profile
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="#" class="profile-nav-link">
+                        <i class="fas fa-tshirt"></i> My Items
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="#" class="profile-nav-link">
+                        <i class="fas fa-exchange-alt"></i> Exchange History
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="#" class="profile-nav-link">
+                        <i class="fas fa-heart"></i> Favorites
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="#" class="profile-nav-link">
+                        <i class="fas fa-cog"></i> Account Settings
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="{{ url_for('logout') }}" class="profile-nav-link">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Profile Main Content -->
+    <div class="profile-main">
+        <div class="profile-card">
+            <div class="section-header">
+                <h3 class="section-title">Personal Information</h3>
+                <button type="submit" form="profile-form" class="btn">Save Changes</button>
+            </div>
+            
+            <form id="profile-form" method="post" action="{{ url_for('update_profile') }}">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label">Full Name</label>
+                            <input type="text" id="fullname" name="fullname" class="form-control" value="{{ current_user.fullname }}">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select id="gender" name="gender" class="form-select">
+                                <option value="">Select Gender</option>
+                                <option value="male" {% if current_user.gender == 'male' %}selected{% endif %}>Male</option>
+                                <option value="female" {% if current_user.gender == 'female' %}selected{% endif %}>Female</option>
+                                <option value="non-binary" {% if current_user.gender == 'non-binary' %}selected{% endif %}>Non-binary</option>
+                                <option value="prefer-not-to-say" {% if current_user.gender == 'prefer-not-to-say' %}selected{% endif %}>Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" value="{{ current_user.phone }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" id="address" name="address" class="form-control" value="{{ current_user.address }}">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" id="city" name="city" class="form-control" value="{{ current_user.city }}">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="state" class="form-label">State/Province</label>
+                            <input type="text" id="state" name="state" class="form-control" value="{{ current_user.state }}">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="zip" class="form-label">Zip/Postal Code</label>
+                            <input type="text" id="zip" name="zip" class="form-control" value="{{ current_user.zip }}">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country" class="form-label">Country</label>
+                    <select id="country" name="country" class="form-select">
+                        <option value="">Select Country</option>
+                        <option value="US" {% if current_user.country == 'US' %}selected{% endif %}>United States</option>
+                        <option value="CA" {% if current_user.country == 'CA' %}selected{% endif %}>Canada</option>
+                        <option value="UK" {% if current_user.country == 'UK' %}selected{% endif %}>United Kingdom</option>
+                        <option value="AU" {% if current_user.country == 'AU' %}selected{% endif %}>Australia</option>
+                        <!-- Add more countries as needed -->
+                    </select>
+                </div>
+            </form>
+        </div>
+        
+        <div class="profile-card points-history">
+            <div class="section-header">
+                <h3 class="section-title">Points History</h3>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-details">
+                    <div class="history-title">Welcome Bonus</div>
+                    <div class="history-date">{{ (current_user.date_joined or now).strftime('%B %d, %Y') }}</div>
+                </div>
+                <div class="history-points points-positive">+50 points</div>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-details">
+                    <div class="history-title">Profile Completion</div>
+                    <div class="history-date">{{ (current_user.date_joined or now).strftime('%B %d, %Y') }}</div>
+                </div>
+                <div class="history-points points-positive">+25 points</div>
+            </div>
+            
+            <div class="history-item">
+                <div class="history-details">
+                    <div class="history-title">Daily Login Bonus</div>
+                    <div class="history-date">{{ now.strftime('%B %d, %Y') }}</div>
+                </div>
+                <div class="history-points points-positive">+5 points</div>
+            </div>
+            
+            {% if current_user.points_history %}
+                {% for history in current_user.points_history %}
+                <div class="history-item">
+                    <div class="history-details">
+                        <div class="history-title">{{ history.title }}</div>
+                        <div class="history-date">{{ history.date.strftime('%B %d, %Y') }}</div>
+                    </div>
+                    <div class="history-points {% if history.points > 0 %}points-positive{% else %}points-negative{% endif %}">
+                        {% if history.points > 0 %}+{% endif %}{{ history.points }} points
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Avatar upload preview
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatarInput = document.getElementById('avatar-input');
+        const avatarContainer = document.querySelector('.profile-avatar');
+        
+        avatarInput.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    // Remove icon if present
+                    const icon = avatarContainer.querySelector('i');
+                    if (icon) {
+                        icon.remove();
+                    }
+                    
+                    // Check if image already exists
+                    let img = avatarContainer.querySelector('img');
+                    if (!img) {
+                        img = document.createElement('img');
+                        avatarContainer.prepend(img);
+                    }
+                    
+                    img.src = e.target.result;
+                }
+                
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+    });
+</script>
+{% endblock %}
