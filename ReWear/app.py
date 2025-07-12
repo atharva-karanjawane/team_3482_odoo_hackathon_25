@@ -1,11 +1,12 @@
-from flask import Flask, render_template, request, redirect, flash, url_for, session, flash
-from database import create_user, get_user_by_email, SessionLocal, User
 import bcrypt
+from flask import Flask, render_template, request, redirect, flash, url_for, session, flash
+from database import create_user, get_user_by_email, SessionLocal, User, get_available_products
 import os
 import secrets
 import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
+from functools import wraps
 
 load_dotenv()
 
@@ -28,10 +29,27 @@ def send_recovery_email(to_email, code):
         smtp.login(EMAIL_USER, EMAIL_PASS)
         smtp.send_message(msg)
 
-# Home page
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "uid" not in session:
+            flash("Please log in to access this page.", "warning")
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html")  # Show about, login, signup buttons
+
+@app.route("/home")
+@login_required
+def landing_page():
+    products = get_available_products(limit=4)
+    return render_template("landing_page.html", products=products)
 
 
 # Sign Up
@@ -60,7 +78,7 @@ def login():
         if user and bcrypt.checkpw(password.encode(), user["password"].encode()):
             session["uid"] = user["uid"]
             session["name"] = user["name"]
-            return redirect("/")
+            return redirect("/home")
         else:
             flash("Invalid email or password!")
     return render_template("login.html")
