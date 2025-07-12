@@ -3,3 +3,4 @@ bcrypt
 python-dotenv
 sqlalchemy
 pytz
+psycopg2
