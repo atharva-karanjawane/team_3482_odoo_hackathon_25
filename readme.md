@@ -38,6 +38,10 @@ ReWear is a web-based platform designed to promote **sustainable fashion** by al
 
 ![password reset](./assets/reset.jpg)
 
+### Credit system
+
+![credit system](./assets/credit.jpg)
+
 ---
 
 ## 🌿 Features
