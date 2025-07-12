@@ -1,6 +1,7 @@
+from datetime import datetime
 import bcrypt
 from flask import Flask, render_template, request, redirect, flash, url_for, session, flash
-from database import create_user, get_user_by_email, SessionLocal, User, get_available_products
+from database import create_user, get_user_by_email, SessionLocal, User, get_available_products,SessionLocal, User
 import os
 import secrets
 import smtplib
@@ -121,6 +122,44 @@ def reset_password():
             flash("Invalid email or code!", "danger")
     return render_template("reset_password.html")
 
+
+# Route to display profile page
+@app.route("/profile", methods=["GET"])
+def profile():
+    if "uid" not in session:
+        flash("Please login to view your profile.")
+        return redirect("/login")
+    
+    db = SessionLocal()
+    user = db.query(User).filter(User.uid == session["uid"]).first()
+    now = datetime.now()
+
+    return render_template("profile.html", current_user=user, now=now)
+
+
+# Route to update profile
+@app.route("/update-profile", methods=["POST"])
+def update_profile():
+    if "uid" not in session:
+        flash("Please login first.")
+        return redirect("/login")
+
+    db = SessionLocal()
+    user = db.query(User).filter(User.uid == session["uid"]).first()
+
+    # Get form fields
+    user.fullname = request.form.get("fullname")
+    user.gender = request.form.get("gender")
+    user.phone = request.form.get("phone")
+    user.address = request.form.get("address")
+    user.city = request.form.get("city")
+    user.state = request.form.get("state")
+    user.zip = request.form.get("zip")
+    user.country = request.form.get("country")
+
+    db.commit()
+    flash("Profile updated successfully.", "success")
+    return redirect("/profile")
 
 # Logout
 @app.route("/logout")
