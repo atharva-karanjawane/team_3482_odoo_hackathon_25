@@ -1,124 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rewear | Sign Up</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        accent: '#e8846b',
-                        accentHover: '#d67d65',
-                        textDark: '#333333',
-                        textMedium: '#555555',
-                        textLight: '#888888',
-                        borderColor: '#eeeeee',
-                        facebook: '#3b5998',
-                        google: '#db4437',
-                        pinterest: '#bd081c'
-                    },
-                    fontFamily: {
-                        montserrat: ['Montserrat', 'sans-serif'],
-                        playfair: ['Playfair Display', 'serif']
-                    },
-                    boxShadow: {
-                        custom: '0 8px 30px rgba(0, 0, 0, 0.05)'
-                    }
-                }
-            }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rewear | Sign Up</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#e8846b',
+            accentHover: '#d67d65',
+            textDark: '#333333',
+            textMedium: '#555555',
+            textLight: '#888888',
+            borderColor: '#eeeeee',
+            facebook: '#3b5998',
+            google: '#db4437',
+            pinterest: '#bd081c'
+          },
+          fontFamily: {
+            montserrat: ['Montserrat', 'sans-serif']
+          },
+          boxShadow: {
+            custom: '0 8px 30px rgba(0, 0, 0, 0.05)'
+          }
         }
-    </script>
+      }
+    };
+  </script>
 </head>
 <body class="bg-white min-h-screen flex items-center justify-center p-4 font-montserrat text-textDark">
-    <div class="w-full max-w-md">
-        <div class="bg-white rounded shadow-custom p-8 flex flex-col items-center">
-            <!-- Brand Title -->
-            <h1 class="text-2xl md:text-3xl font-semibold tracking-wider uppercase text-center mb-6">Re-Wear</h1>
-            
-            <!-- Logo Circle -->
-            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-md border border-borderColor mb-4">
-                <div class="text-accent text-xl md:text-2xl font-semibold">X</div>
-            </div>
-            
-            <!-- Page Title -->
-            <h2 class="text-xl font-semibold tracking-wide text-center mb-2">Sign Up</h2>
-            
-            <!-- Description -->
-            <p class="text-textMedium text-sm text-center mb-6 max-w-sm">
-                Create your Re-Wear account to access exclusive fashion collections and personalized recommendations.
-            </p>
-            
-            <!-- Form -->
-            <form class="w-full">
-                <!-- Full Name -->
-                <div class="mb-4">
-                    <input 
-                        type="text" 
-                        placeholder="Full Name" 
-                        class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
-                    >
-                </div>
-                
-                <!-- Email -->
-                <div class="mb-4">
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
-                    >
-                </div>
-                
-                <!-- Password -->
-                <div class="mb-6">
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
-                    >
-                </div>
-                
-                <!-- Sign Up Button -->
-                <button 
-                    type="submit" 
-                    class="w-full bg-accent hover:bg-accentHover text-white py-3 rounded font-medium text-sm uppercase tracking-wider transition duration-200"
-                >
-                    Sign Up
-                </button>
-            </form>
-            
-            <!-- Social Login -->
-            <div class="w-full mt-8 text-center">
-                <div class="flex items-center mb-5">
-                    <div class="flex-grow h-px bg-borderColor"></div>
-                    <div class="px-4 text-xs uppercase tracking-wider text-textLight">or sign up with</div>
-                    <div class="flex-grow h-px bg-borderColor"></div>
-                </div>
-                
-                <div class="flex justify-center gap-4">
-                    <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-facebook hover:border-facebook hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
-                        <i class="fab fa-facebook-f"></i>
-                    </div>
-                    <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-google hover:border-google hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
-                        <i class="fab fa-google"></i>
-                    </div>
-                    <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-pinterest hover:border-pinterest hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
-                        <i class="fab fa-pinterest-p"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Login Link -->
-            <a href="/login" class="mt-6 text-textMedium text-sm hover:text-accent transition">
-                Already have an account? <span class="text-accent font-medium hover:underline">Login</span>
-            </a>
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded shadow-custom p-8 flex flex-col items-center">
+      <!-- Brand -->
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-wider uppercase text-center mb-6">Re-Wear</h1>
+      <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-md border border-borderColor mb-4">
+        <div class="text-accent text-xl md:text-2xl font-semibold">R</div>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="text-xl font-semibold tracking-wide text-center mb-2">Sign Up</h2>
+      <p class="text-textMedium text-sm text-center mb-6 max-w-sm">
+        Create your Re-Wear account to access exclusive fashion collections and personalized recommendations.
+      </p>
+
+      <!-- Signup Form -->
+      <form action="/signup" method="POST" class="w-full">
+        <div class="mb-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            required
+            class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
+          />
         </div>
+        <div class="mb-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
+          />
+        </div>
+        <div class="mb-6">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-accent hover:bg-accentHover text-white py-3 rounded font-medium text-sm uppercase tracking-wider transition duration-200"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <!-- Social Signup -->
+      <div class="w-full mt-8 text-center">
+        <div class="flex items-center mb-5">
+          <div class="flex-grow h-px bg-borderColor"></div>
+          <div class="px-4 text-xs uppercase tracking-wider text-textLight">or sign up with</div>
+          <div class="flex-grow h-px bg-borderColor"></div>
+        </div>
+
+        <div class="flex justify-center gap-4">
+          <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-facebook hover:border-facebook hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
+            <i class="fab fa-facebook-f"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-google hover:border-google hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-pinterest hover:border-pinterest hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
+            <i class="fab fa-pinterest-p"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Link -->
+      <div class="mt-6 text-textMedium text-sm text-center">
+        Already have an account?
+        <a href="/login" class="text-accent font-medium hover:underline">Login</a>
+      </div>
     </div>
+  </div>
 </body>
 </html>

@@ -1,130 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X-TREME | Login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        accent: '#e8846b',
-                        accentHover: '#d67d65',
-                        textDark: '#333333',
-                        textMedium: '#555555',
-                        textLight: '#888888',
-                        borderColor: '#eeeeee',
-                        facebook: '#3b5998',
-                        google: '#db4437',
-                        pinterest: '#bd081c'
-                    },
-                    fontFamily: {
-                        montserrat: ['Montserrat', 'sans-serif'],
-                        playfair: ['Playfair Display', 'serif']
-                    },
-                    boxShadow: {
-                        custom: '0 8px 30px rgba(0, 0, 0, 0.05)'
-                    }
-                }
-            }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>X-TREME | Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: '#e8846b',
+            accentHover: '#d67d65',
+            textDark: '#333333',
+            textMedium: '#555555',
+            textLight: '#888888',
+            borderColor: '#eeeeee',
+            facebook: '#3b5998',
+            google: '#db4437',
+            pinterest: '#bd081c'
+          },
+          fontFamily: {
+            montserrat: ['Montserrat', 'sans-serif']
+          },
+          boxShadow: {
+            custom: '0 8px 30px rgba(0, 0, 0, 0.05)'
+          }
         }
-    </script>
+      }
+    };
+  </script>
 </head>
 <body class="bg-white min-h-screen flex items-center justify-center p-4 font-montserrat text-textDark">
-    <div class="w-full max-w-md">
-        <div class="bg-white rounded shadow-custom p-8 flex flex-col items-center">
-            <!-- Brand Title -->
-            <h1 class="text-2xl md:text-3xl font-semibold tracking-wider uppercase text-center mb-6">X-TREME</h1>
-            
-            <!-- Logo Circle -->
-            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-md border border-borderColor mb-4">
-                <div class="text-accent text-xl md:text-2xl font-semibold">X</div>
-            </div>
-            
-            <!-- Page Title -->
-            <h2 class="text-xl font-semibold tracking-wide text-center mb-2">Login</h2>
-            
-            <!-- Description -->
-            <p class="text-textMedium text-sm text-center mb-6 max-w-sm">
-                Welcome back to X-TREME. Sign in to access your account and explore our latest collections.
-            </p>
-            
-            <!-- Form -->
-            <form class="w-full">
-                <!-- Email -->
-                <div class="mb-4">
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
-                        class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
-                    >
-                </div>
-                
-                <!-- Password -->
-                <div class="mb-4">
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
-                        class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
-                    >
-                </div>
-                
-                <!-- Remember Me & Forgot Password -->
-                <div class="flex justify-between items-center mb-6 text-sm">
-                    <label class="flex items-center text-textMedium">
-                        <input type="checkbox" class="mr-2 h-4 w-4 accent-accent">
-                        Remember me
-                    </label>
-                    <a href="/forgot-password" class="text-textMedium hover:text-accent transition">Forgot Password?</a>
-                </div>
-                
-                <!-- Login Button -->
-                <button 
-                    type="submit" 
-                    class="w-full bg-accent hover:bg-accentHover text-white py-3 rounded font-medium text-sm uppercase tracking-wider transition duration-200"
-                >
-                    Login
-                </button>
-            </form>
-            
-            <!-- Social Login -->
-            <div class="w-full mt-8 text-center">
-                <div class="flex items-center mb-5">
-                    <div class="flex-grow h-px bg-borderColor"></div>
-                    <div class="px-4 text-xs uppercase tracking-wider text-textLight">or login with</div>
-                    <div class="flex-grow h-px bg-borderColor"></div>
-                </div>
-                
-                <div class="flex justify-center gap-4">
-                    <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-facebook hover:border-facebook hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
-                        <i class="fab fa-facebook-f"></i>
-                    </div>
-                    <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-google hover:border-google hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
-                        <i class="fab fa-google"></i>
-                    </div>
-                    <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-pinterest hover:border-pinterest hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
-                        <i class="fab fa-pinterest-p"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Sign Up Link -->
-            <div class="mt-6 text-textMedium text-sm text-center">
-                Don't have an account? <a href="/signup" class="text-accent font-medium hover:underline">Sign Up</a>
-            </div>
-            
-            <!-- Additional Links -->
-            <div class="mt-4 text-textMedium text-xs text-center">
-                <a href="/signup" class="hover:text-accent transition">Sign up</a> | 
-                <a href="/forgot-password" class="hover:text-accent transition">Forgot password?</a>
-            </div>
+  <div class="w-full max-w-md">
+    <div class="bg-white rounded shadow-custom p-8 flex flex-col items-center">
+      <!-- Brand -->
+      <h1 class="text-2xl md:text-3xl font-semibold tracking-wider uppercase text-center mb-6">X-TREME</h1>
+      <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center shadow-md border border-borderColor mb-4">
+        <div class="text-accent text-xl md:text-2xl font-semibold">X</div>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="text-xl font-semibold tracking-wide text-center mb-2">Login</h2>
+      <p class="text-textMedium text-sm text-center mb-6 max-w-sm">
+        Welcome back to X-TREME. Sign in to access your account and explore our latest collections.
+      </p>
+
+      <!-- Login Form -->
+      <form action="/login" method="POST" class="w-full">
+        <div class="mb-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
+          />
         </div>
+        <div class="mb-4">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            class="w-full px-4 py-3 border border-borderColor rounded text-sm focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition"
+          />
+        </div>
+
+        <div class="flex justify-between items-center mb-6 text-sm">
+          <label class="flex items-center text-textMedium">
+            <input type="checkbox" class="mr-2 h-4 w-4 accent-accent" />
+            Remember me
+          </label>
+          <a href="/forgot-password" class="text-textMedium hover:text-accent transition">Forgot Password?</a>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-accent hover:bg-accentHover text-white py-3 rounded font-medium text-sm uppercase tracking-wider transition duration-200"
+        >
+          Login
+        </button>
+      </form>
+
+      <!-- Social Login -->
+      <div class="w-full mt-8 text-center">
+        <div class="flex items-center mb-5">
+          <div class="flex-grow h-px bg-borderColor"></div>
+          <div class="px-4 text-xs uppercase tracking-wider text-textLight">or login with</div>
+          <div class="flex-grow h-px bg-borderColor"></div>
+        </div>
+
+        <div class="flex justify-center gap-4">
+          <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-facebook hover:border-facebook hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
+            <i class="fab fa-facebook-f"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-google hover:border-google hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
+            <i class="fab fa-google"></i>
+          </div>
+          <div class="w-10 h-10 rounded-full border border-borderColor flex items-center justify-center text-textMedium hover:bg-pinterest hover:border-pinterest hover:text-white transform hover:-translate-y-1 transition duration-200 cursor-pointer">
+            <i class="fab fa-pinterest-p"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign Up Link -->
+      <div class="mt-6 text-textMedium text-sm text-center">
+        Don't have an account?
+        <a href="/signup" class="text-accent font-medium hover:underline">Sign Up</a>
+      </div>
     </div>
+  </div>
 </body>
 </html>
