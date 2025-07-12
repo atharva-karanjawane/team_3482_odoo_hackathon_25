@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-TREME | Fashion & Lifestyle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #e8846b; /* Soft coral */
+            --accent-hover: #d67d65;
+            --background: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #888888;
+            --border-color: #eeeeee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .user-icon:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            padding: 20px 0;
+        }
+        
+        .search-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        .search-button {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .search-button:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 300px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: var(--text-medium);
+            font-size: 18px;
+            font-style: italic;
+        }
+        
+        /* Categories Section */
+        .section-title {
+            text-align: center;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .section-title span {
+            background-color: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+            color: var(--text-medium);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-title:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .category-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border-color: var(--accent-color);
+        }
+        
+        .category-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        /* Product Listings */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+        
+        .product-info {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .product-price {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">X-TREME</a>
+                <div class="user-actions">
+                    <div class="user-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search for products...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="hero-banner">
+            <div class="hero-content">
+                <p>Featured Images</p>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <span>Categories Section</span>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-name">Women's Fashion</div>
+            </div>
+            <div class="category-card">
+                <div class="category-name">Men's Fashion</div>
+            </div>
+            <div class="category-card">
+                <div class="category-name">Accessories</div>
+            </div>
+            <div class="category-card">
+                <div class="category-name">Footwear</div>
+            </div>
+            <div class="category-card">
+                <div class="category-name">Beauty</div>
+            </div>
+            <div class="category-card">
+                <div class="category-name">New Arrivals</div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <span>Product Listings</span>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <p>Product Image</p>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Elegant Dress</div>
+                    <div class="product-price">$129.99</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <p>Product Image</p>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Designer Jacket</div>
+                    <div class="product-price">$199.99</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <p>Product Image</p>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Premium Handbag</div>
+                    <div class="product-price">$159.99</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <p>Product Image</p>
+                </div>
+                <div class="product-info">
+                    <div class="product-name">Luxury Watch</div>
+                    <div class="product-price">$249.99</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
