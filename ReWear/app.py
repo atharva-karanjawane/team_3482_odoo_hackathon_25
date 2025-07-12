@@ -8,6 +8,7 @@ import smtplib
 from email.message import EmailMessage
 from dotenv import load_dotenv
 from functools import wraps
+from sqlalchemy.orm import joinedload
 
 load_dotenv()
 
@@ -50,7 +51,13 @@ def index():
 @login_required
 def landing_page():
     now = datetime.now()
-    products = get_available_products(limit=4)
+    db = SessionLocal()
+
+    # Fetch products with related images
+    products = db.query(Product).options(joinedload(Product.images)).filter(
+        Product.status == "available"
+    ).order_by(Product.created_at.desc()).limit(4).all()
+
     return render_template("landing_page.html", products=products, now=now)
 
 @app.route("/product/<int:pid>")
