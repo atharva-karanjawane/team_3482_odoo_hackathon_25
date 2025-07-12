@@ -1,8 +1,314 @@
-<h2>Sign Up</h2>
-<form method="POST">
-  Name: <input name="name"><br>
-  Email: <input name="email"><br>
-  Password: <input type="password" name="password"><br>
-  <button>Sign Up</button>
-</form>
-<a href="/login">Already have an account?</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-TREME | Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #e8846b; /* Soft coral */
+            --accent-hover: #d67d65;
+            --background: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #888888;
+            --border-color: #eeeeee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --facebook: #3b5998;
+            --google: #db4437;
+            --pinterest: #bd081c;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--background);
+            min-height: 100vh;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .registration-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .registration-form {
+            width: 100%;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            overflow: hidden;
+            position: relative;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            margin: 0 0 25px 0;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            margin: 0 0 20px 0;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        
+        .page-description {
+            color: var(--text-medium);
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: center;
+            margin: 0 0 25px 0;
+        }
+
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+        
+        .logo-placeholder {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-color);
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--text-dark);
+            background-color: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(232, 132, 107, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: var(--text-light);
+            font-weight: 300;
+        }
+
+        .register-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 0;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: background-color 0.2s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .register-button:hover {
+            background-color: var(--accent-hover);
+        }
+        
+        .social-login {
+            margin-top: 30px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .divider-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            color: var(--text-light);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s, color 0.2s;
+            color: var(--text-medium);
+        }
+        
+        .social-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .facebook-btn:hover {
+            background-color: var(--facebook);
+            border-color: var(--facebook);
+            color: white;
+        }
+        
+        .google-btn:hover {
+            background-color: var(--google);
+            border-color: var(--google);
+            color: white;
+        }
+        
+        .pinterest-btn:hover {
+            background-color: var(--pinterest);
+            border-color: var(--pinterest);
+            color: white;
+        }
+        
+        .login-link {
+            margin-top: 20px;
+            color: var(--text-medium);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            display: block;
+            text-align: center;
+        }
+        
+        .login-link span {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        
+        .login-link:hover span {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="registration-form">
+            <h1 class="brand-title">X-TREME</h1>
+            
+            <div class="logo-circle">
+                <div class="logo-placeholder">X</div>
+            </div>
+            
+            <h2 class="page-title">Sign Up</h2>
+            
+            <p class="page-description">Create your X-TREME account to access exclusive fashion collections and personalized recommendations.</p>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="Username">
+            </div>
+            
+            <div class="input-group">
+                <input type="password" class="input-field" placeholder="Password">
+            </div>
+            
+            <div class="input-group">
+                <input type="password" class="input-field" placeholder="Confirm Password">
+            </div>
+            
+            <div class="input-group">
+                <input type="email" class="input-field" placeholder="Email">
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="First Name">
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" placeholder="Last Name">
+            </div>
+            
+            <div class="input-group">
+                <input type="tel" class="input-field" placeholder="Mobile Number">
+            </div>
+            
+            <button class="register-button">Sign Up</button>
+            
+            <div class="social-login">
+                <div class="social-divider">
+                    <div class="divider-line"></div>
+                    <div class="divider-text">or sign up with</div>
+                    <div class="divider-line"></div>
+                </div>
+                
+                <div class="social-buttons">
+                    <div class="social-button facebook-btn">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-button google-btn">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="social-button pinterest-btn">
+                        <i class="fab fa-pinterest-p"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#" class="login-link">Already have an account? <span>Login</span></a>
+        </div>
+    </div>
+</body>
+</html>
