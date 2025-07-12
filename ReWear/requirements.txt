@@ -1,0 +1,8 @@
+flask
+bcrypt
+python-dotenv
+sqlalchemy
+pytz
+email
+smtplib
+pyscog2
