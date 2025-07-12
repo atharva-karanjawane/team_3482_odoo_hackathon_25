@@ -9,7 +9,6 @@ from email.message import EmailMessage
 from dotenv import load_dotenv
 from functools import wraps
 from sqlalchemy.orm import joinedload
-from flask_login import current_user
 
 load_dotenv()
 
@@ -85,8 +84,7 @@ def landing_page():
     return render_template(
         "landing_page.html",
         products=products,
-        now=now,
-        current_user=current_user
+        now=now
     )
 
 @app.route("/product/<int:pid>")
