@@ -3,5 +3,4 @@ bcrypt
 python-dotenv
 sqlalchemy
 pytz
-smtplib
 pyscog2
