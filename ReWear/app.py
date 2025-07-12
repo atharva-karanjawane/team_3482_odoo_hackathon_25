@@ -1,7 +1,7 @@
 from datetime import datetime
 import bcrypt
-from flask import Flask, render_template, request, redirect, flash, url_for, session, flash
-from database import create_user, get_user_by_email, SessionLocal, User, get_available_products,SessionLocal, User
+from flask import Flask, render_template, request, redirect, flash, url_for, session, flash, abort
+from database import create_user, get_user_by_email, SessionLocal, User, get_available_products,SessionLocal, User, Product
 import os
 import secrets
 import smtplib
@@ -52,6 +52,17 @@ def landing_page():
     now = datetime.now()
     products = get_available_products(limit=4)
     return render_template("landing_page.html", products=products, now=now)
+
+@app.route("/product/<int:pid>")
+def product_detail(pid):
+    db = SessionLocal()
+    product = db.query(Product).filter(Product.pid == pid).first()
+    if not product:
+        abort(404)
+    images = sorted(product.images, key=lambda i: not i.is_primary)
+    now = datetime.now()
+    return render_template("product_detail.html", product=product, images=images, now = now)
+
 
 
 # Sign Up

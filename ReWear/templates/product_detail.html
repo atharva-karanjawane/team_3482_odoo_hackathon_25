@@ -1,0 +1,761 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-TREME | Product Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #e8846b;
+            /* Soft coral */
+            --accent-hover: #d67d65;
+            --background: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #888888;
+            --border-color: #eeeeee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .user-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-icon:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Profile Popup Styles */
+        .profile-popup {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            z-index: 100;
+            display: none;
+        }
+
+        .profile-popup.active {
+            display: block;
+        }
+
+        .popup-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .popup-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-link {
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-medium);
+            font-size: 14px;
+            transition: all 0.2s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-link:last-child {
+            border-bottom: none;
+        }
+
+        .popup-link:hover {
+            background-color: var(--border-color);
+            color: var(--accent-color);
+        }
+
+        /* Search Bar */
+        .search-container {
+            padding: 20px 0;
+        }
+
+        .search-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-icon {
+            padding: 0 15px;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-button {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .search-button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Product Detail Styles */
+        .product-detail {
+            display: flex;
+            margin: 40px 0;
+            gap: 40px;
+        }
+
+        .product-gallery {
+            flex: 1;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .thumbnail:hover {
+            border-color: var(--accent-color);
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .product-price {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            color: var(--text-medium);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            transition: all 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .add-to-cart {
+            flex: 1;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .product-meta {
+            margin-bottom: 30px;
+        }
+
+        .meta-item {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .meta-label {
+            width: 120px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .meta-value {
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+
+        /* Product Tabs */
+        .product-tabs {
+            margin-bottom: 40px;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Related Products */
+        .related-products {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .section-title span {
+            background-color: white;
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+            color: var(--text-medium);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+        .product-card-info {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .product-card-price {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .product-detail {
+                flex-direction: column;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">X-TREME</a>
+                <nav class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Products</a>
+                    <a href="#">My Orders</a>
+                    <a href="#">Profile</a>
+                </nav>
+                <div class="user-actions">
+                    <div class="user-icon" id="profileIcon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-popup" id="profilePopup">
+                        <div class="popup-header">
+                            <div class="user-name">John Doe</div>
+                        </div>
+                        <div class="popup-links">
+                            <a href="#" class="popup-link">Home</a>
+                            <a href="#" class="popup-link">Products</a>
+                            <a href="#" class="popup-link">My Orders</a>
+                            <a href="#" class="popup-link">Profile</a>
+                            <a href="#" class="popup-link">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> -->
+
+    <div class="container">
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" class="search-input" placeholder="Search for products...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="product-detail">
+            <div class="product-gallery">
+                <div class="main-image">
+                    {% if images %}
+                    <img src="{{ images[0].image_url }}" alt="Main Image" style="max-height: 100%; max-width: 100%;">
+                    {% else %}
+                    <p>No Image</p>
+                    {% endif %}
+                </div>
+                <div class="thumbnail-container">
+                    {% for img in images %}
+                    <div class="thumbnail">
+                        <img src="{{ img.image_url }}" alt="Thumbnail" style="max-height: 100%; max-width: 100%;">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1 class="product-title">{{ product.title }}</h1>
+                <p class="product-price">{{ product.point_value }} pts</p>
+                <p class="product-description">{{ product.description }}</p>
+
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <input type="text" class="quantity-input" value="1">
+                        <button class="quantity-btn">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Category:</div>
+                        <div class="meta-value">{{ product.category }}</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Subcategory:</div>
+                        <div class="meta-value">{{ product.subcategory }}</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Size:</div>
+                        <div class="meta-value">{{ product.size }}</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Condition:</div>
+                        <div class="meta-value">{{ product.condition }}</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Status:</div>
+                        <div class="meta-value">{{ product.status }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-tabs">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="description">Description</button>
+                <button class="tab-btn" data-tab="specifications">Specifications</button>
+                <button class="tab-btn" data-tab="reviews">Reviews</button>
+            </div>
+
+            <div class="tab-content active" id="description">
+                <p>This elegant designer dress is the perfect addition to your wardrobe. Featuring a modern silhouette
+                    with carefully crafted details, it's designed to make you stand out at any event. The premium fabric
+                    ensures comfort while maintaining a luxurious look and feel.</p>
+                <p>The unique design elements include delicate embroidery, strategic cutouts, and a flattering fit that
+                    complements various body types. Each piece is carefully inspected to ensure the highest quality
+                    standards are met.</p>
+                <p>Whether you're attending a formal gala, a wedding, or a special dinner, this dress will help you make
+                    a lasting impression with its timeless elegance and contemporary style.</p>
+            </div>
+
+            <div class="tab-content" id="specifications">
+                <p><strong>Material:</strong> 85% Polyester, 15% Elastane</p>
+                <p><strong>Care Instructions:</strong> Dry clean only</p>
+                <p><strong>Size & Fit:</strong> Model is 5'9" and wears size S</p>
+                <p><strong>Features:</strong></p>
+                <ul>
+                    <li>Concealed back zip</li>
+                    <li>Lined bodice</li>
+                    <li>Adjustable straps</li>
+                    <li>Side pockets</li>
+                </ul>
+            </div>
+
+            <div class="tab-content" id="reviews">
+                <p>No reviews yet. Be the first to review this product!</p>
+            </div>
+        </div>
+
+        <div class="related-products">
+            <div class="section-title">
+                <span>You May Also Like</span>
+            </div>
+
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <p>Product Image</p>
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Designer Jacket</div>
+                        <div class="product-card-price">$199.99</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <p>Product Image</p>
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Premium Handbag</div>
+                        <div class="product-card-price">$159.99</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <p>Product Image</p>
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Luxury Watch</div>
+                        <div class="product-card-price">$249.99</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <p>Product Image</p>
+                    </div>
+                    <div class="product-card-info">
+                        <div class="product-card-name">Casual Shoes</div>
+                        <div class="product-card-price">$89.99</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile popup functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileIcon = document.getElementById('profileIcon');
+            const profilePopup = document.getElementById('profilePopup');
+
+            profileIcon.addEventListener('click', function () {
+                profilePopup.classList.toggle('active');
+            });
+
+            // Close popup when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!profileIcon.contains(event.target) && !profilePopup.contains(event.target)) {
+                    profilePopup.classList.remove('active');
+                }
+            });
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Quantity selector functionality
+            const minusBtn = document.querySelector('.quantity-btn:first-child');
+            const plusBtn = document.querySelector('.quantity-btn:last-child');
+            const quantityInput = document.querySelector('.quantity-input');
+
+            minusBtn.addEventListener('click', function () {
+                let quantity = parseInt(quantityInput.value);
+                if (quantity > 1) {
+                    quantityInput.value = quantity - 1;
+                }
+            });
+
+            plusBtn.addEventListener('click', function () {
+                let quantity = parseInt(quantityInput.value);
+                quantityInput.value = quantity + 1;
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+{% endblock %}
