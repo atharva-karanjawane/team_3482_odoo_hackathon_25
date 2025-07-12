@@ -64,12 +64,24 @@ def index():
     return render_template("index.html")  # Show about, login, signup buttons
 
 @app.route("/admin")
-@admin_required
+@login_required
 def admin_panel():
     db = SessionLocal()
+    
+    current_user = db.query(User).filter(User.uid == session["uid"]).first()
+    if not current_user or current_user.role != "admin":
+        flash("Access denied: Admins only", "danger")
+        return redirect(url_for("landing_page"))
+
     users = db.query(User).all()
-    db.close()
-    return render_template("admin_panel.html", users=users)
+    transactions = db.query(Transaction).all()
+    products = db.query(Product).options(joinedload(Product.images)).all()
+
+    return render_template("admin_panel.html", 
+                           users=users,
+                           transactions=transactions,
+                           products=products,
+                           current_user=current_user)
 
 @app.route("/home")
 @login_required

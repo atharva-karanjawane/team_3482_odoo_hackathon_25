@@ -4,3 +4,4 @@ python-dotenv
 sqlalchemy
 pytz
 psycopg2
+flask_login

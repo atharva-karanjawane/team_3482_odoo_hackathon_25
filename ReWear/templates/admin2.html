@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-TREME | Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #e8846b; /* Soft coral */
+            --accent-hover: #d67d65;
+            --background: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #888888;
+            --border-color: #eeeeee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --status-pending: #f0ad4e;
+            --status-completed: #5cb85c;
+            --status-rejected: #d9534f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .admin-header {
+            background-color: #6a0dad; /* Purple header background */
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
+        }
+
+        .admin-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* Main Panel Styles */
+        .admin-panel {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-profile-tag {
+            background-color: #e6e6fa; /* Light purple */
+            color: #6a0dad;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Navigation Tabs */
+        .admin-tabs {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin: 0 10px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .admin-tab:hover {
+            background-color: #f0f0f0;
+        }
+
+        .admin-tab.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* User Cards */
+        .user-list {
+            padding: 20px;
+        }
+
+        .user-card {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--text-medium);
+        }
+
+        .user-details {
+            flex: 1;
+            padding: 15px;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-tag {
+            background-color: #e6e6fa;
+            color: #6a0dad;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .user-info {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .user-actions {
+            width: 150px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn.primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .action-btn.secondary {
+            background-color: #f0f0f0;
+            color: var(--text-medium);
+        }
+
+        .action-btn.secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Edit User Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background-color: white;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: var(--text-medium);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Swap Orders Table */
+        .swap-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .swap-table th,
+        .swap-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .swap-table th {
+            background-color: #f9f9f9;
+            font-weight: 500;
+            color: var(--text-medium);
+        }
+
+        .swap-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Product Listings */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .product-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 24px;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .product-category {
+            color: var(--text-medium);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .product-points {
+            font-weight: 500;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .admin-tabs {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .admin-tab {
+                margin: 5px 0;
+            }
+            
+            .user-card {
+                flex-direction: column;
+            }
+            
+            .user-avatar {
+                width: 100%;
+                height: 120px;
+            }
+            
+            .user-details {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .user-actions {
+                width: 100%;
+                flex-direction: row;
+                padding: 10px;
+            }
+            
+            .action-btn {
+                flex: 1;
+            }
+
+            .swap-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="admin-header">
+            <h1>Admin Panel</h1>
+        </div>
+        
+        <div class="admin-panel">
+            <div class="user-profile">
+                <div class="user-profile-tag">Admin</div>
+            </div>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="manage-users">Manage Users</div>
+                <div class="admin-tab" data-tab="manage-orders">Manage Orders</div>
+                <div class="admin-tab" data-tab="manage-listings">Manage Listings</div>
+            </div>
+            
+            <!-- Manage Users Section -->
+            <div id="manage-users" class="content-section active">
+                <div class="section-header">
+                    Manage Users
+                </div>
+                
+                <div class="user-list">
+                    <!-- User 1 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">
+                                keni patel
+                            </div>
+                            <div class="user-info">Email: keni.patel@example.com</div>
+                            <div class="user-info">Mobile: +1 (555) 123-4567</div>
+                            <div class="user-info">Username: keni_p</div>
+                        </div>
+                        <div class="user-actions">
+                            <div class="action-btn primary edit-user-btn" data-user="keni_p">Edit</div>
+                            <div class="action-btn secondary">Delete</div>
+                        </div>
+                    </div>
+                    
+                    <!-- User 2 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">
+                                John Smith
+                            </div>
+                            <div class="user-info">Email: john.smith@example.com</div>
+                            <div class="user-info">Mobile: +1 (555) 987-6543</div>
+                            <div class="user-info">Username: john_smith</div>
+                        </div>
+                        <div class="user-actions">
+                            <div class="action-btn primary edit-user-btn" data-user="john_smith">Edit</div>
+                            <div class="action-btn secondary">Delete</div>
+                        </div>
+                    </div>
+                    
+                    <!-- User 3 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">
+                                Sarah Johnson
+                            </div>
+                            <div class="user-info">Email: sarah.j@example.com</div>
+                            <div class="user-info">Mobile: +1 (555) 456-7890</div>
+                            <div class="user-info">Username: sarah_j</div>
+                        </div>
+                        <div class="user-actions">
+                            <div class="action-btn primary edit-user-btn" data-user="sarah_j">Edit</div>
+                            <div class="action-btn secondary">Delete</div>
+                        </div>
+                    </div>
+                    
+                    <!-- User 4 -->
+                    <div class="user-card">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">
+                                Michael Brown
+                            </div>
+                            <div class="user-info">Email: michael.b@example.com</div>
+                            <div class="user-info">Mobile: +1 (555) 789-0123</div>
+                            <div class="user-info">Username: michael_b</div>
+                        </div>
+                        <div class="user-actions">
+                            <div class="action-btn primary edit-user-btn" data-user="michael_b">Edit</div>
+                            <div class="action-btn secondary">Delete</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Manage Orders Section -->
+            <div id="manage-orders" class="content-section">
+                <div class="section-header">
+                    Ongoing Swaps
+                </div>
+                
+                <div style="padding: 20px;">
+                    <table class="swap-table">
+                        <thead>
+                            <tr>
+                                <th>Swap ID</th>
+                                <th>Requester</th>
+                                <th>Provider</th>
+                                <th>Item</th>
+                                <th>Points</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#SW12345</td>
+                                <td>keni patel</td>
+                                <td>Sarah Johnson</td>
+                                <td>Blue Denim Jacket</td>
+                                <td>50</td>
+                                <td>2023-07-10</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">Approve</button>
+                                    <button class="btn btn-secondary btn-sm">Reject</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#SW12346</td>
+                                <td>John Smith</td>
+                                <td>Michael Brown</td>
+                                <td>Red T-Shirt</td>
+                                <td>30</td>
+                                <td>2023-07-11</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm">View Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#SW12347</td>
+                                <td>Sarah Johnson</td>
+                                <td>keni patel</td>
+                                <td>Black Jeans</td>
+                                <td>45</td>
+                                <td>2023-07-12</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">Approve</button>
+                                    <button class="btn btn-secondary btn-sm">Reject</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#SW12348</td>
+                                <td>Michael Brown</td>
+                                <td>John Smith</td>
+                                <td>Green Hoodie</td>
+                                <td>60</td>
+                                <td>2023-07-09</td>
+                                <td><span class="status-badge status-rejected">Rejected</span></td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm">View Details</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Manage Listings Section -->
+            <div id="manage-listings" class="content-section">
+                <div class="section-header">
+                    Product Listings
+                </div>
+                
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Blue Denim Jacket</div>
+                            <div class="product-category">Outerwear • Size M</div>
+                            <div class="product-points">50 points</div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                                <button class="btn btn-secondary btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Red T-Shirt</div>
+                            <div class="product-category">Tops • Size L</div>
+                            <div class="product-points">30 points</div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                                <button class="btn btn-secondary btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Black Jeans</div>
+                            <div class="product-category">Bottoms • Size 32</div>
+                            <div class="product-points">45 points</div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                                <button class="btn btn-secondary btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Green Hoodie</div>
+                            <div class="product-category">Outerwear • Size XL</div>
+                            <div class="product-points">60 points</div>
+                            <div class="product-actions">
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                                <button class="btn btn-secondary btn-sm">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit User Modal -->
+    <div class="modal-overlay" id="editUserModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div>Edit User</div>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <div class="form-group">
+                        <label for="userName" class="form-label">Name</label>
+                        <input type="text" id="userName" class="form-input" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail" class="form-label">Email</label>
+                        <input type="email" id="userEmail" class="form-input" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="userMobile" class="form-label">Mobile Number</label>
+                        <input type="tel" id="userMobile" class="form-input" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="userUsername" class="form-label">Username</label>
+                        <input type="text" id="userUsername" class="form-input" value="">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEdit">Cancel</button>
+                <button class="btn btn-primary" id="saveUserChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.admin-tab');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show corresponding content section
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === tabId) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Edit User Modal Functionality
+            const editUserBtns = document.querySelectorAll('.edit-user-btn');
+            const editUserModal = document.getElementById('editUserModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            const cancelEditBtn = document.getElementById('cancelEdit');
+            const saveChangesBtn = document.getElementById('saveUserChanges');
+            
+            // Sample user data (in a real app, this would come from a database)
+            const userData = {
+                'keni_p': {
+                    name: 'keni patel',
+                    email: 'keni.patel@example.com',
+                    mobile: '+1 (555) 123-4567',
+                    username: 'keni_p'
+                },
+                'john_smith': {
+                    name: 'John Smith',
+                    email: 'john.smith@example.com',
+                    mobile: '+1 (555) 987-6543',
+                    username: 'john_smith'
+                },
+                'sarah_j': {
+                    name: 'Sarah Johnson',
+                    email: 'sarah.j@example.com',
+                    mobile: '+1 (555) 456-7890',
+                    username: 'sarah_j'
+                },
+                'michael_b': {
+                    name: 'Michael Brown',
+                    email: 'michael.b@example.com',
+                    mobile: '+1 (555) 789-0123',
+                    username: 'michael_b'
+                }
+            };
+            
+            // Open edit modal with user data
+            editUserBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const username = this.getAttribute('data-user');
+                    const user = userData[username];
+                    
+                    if (user) {
+                        document.getElementById('userName').value = user.name;
+                        document.getElementById('userEmail').value = user.email;
+                        document.getElementById('userMobile').value = user.mobile;
+                        document.getElementById('userUsername').value = user.username;
+                        
+                        editUserModal.classList.add('active');
+                    }
+                });
+            });
+            
+            // Close modal
+            closeModalBtn.addEventListener('click', function() {
+                editUserModal.classList.remove('active');
+            });
+            
+            cancelEditBtn.addEventListener('click', function() {
+                editUserModal.classList.remove('active');
+            });
+            
+            // Save changes (in a real app, this would update the database)
+            saveChangesBtn.addEventListener('click', function() {
+                // Get form values
+                const name = document.getElementById('userName').value;
+                const email = document.getElementById('userEmail').value;
+                const mobile = document.getElementById('userMobile').value;
+                const username = document.getElementById('userUsername').value;
+                
+                // In a real app, you would send this data to the server
+                console.log('Saving user changes:', { name, email, mobile, username });
+                
+                // Close the modal
+                editUserModal.classList.remove('active');
+                
+                // Show success message (in a real app)
+                alert('User information updated successfully!');
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === editUserModal) {
+                    editUserModal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
