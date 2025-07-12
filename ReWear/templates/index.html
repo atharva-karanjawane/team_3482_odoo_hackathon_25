@@ -1,16 +1,258 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>ReWear</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Re-Wear | Sustainable Fashion Swap</title>
+    <style>
+        :root {
+            --primary: #e8846b;
+            --dark: #333333;
+            --light: #f8f8f8;
+            --accent: #4a90e2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .auth-buttons a {
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .login-btn {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            margin-right: 10px;
+        }
+        
+        .login-btn:hover {
+            background-color: rgba(232, 132, 107, 0.1);
+        }
+        
+        .signup-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .signup-btn:hover {
+            background-color: #d97259;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.7)), url('https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=1600&h=900&fit=crop') no-repeat center center;
+            background-size: cover;
+            margin-top: 70px;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #d97259;
+        }
+        
+        .features {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .features h2 {
+            font-size: 36px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin: 20px 0;
+            color: var(--primary);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 36px;
+            }
+            
+            .hero {
+                text-align: center;
+                padding: 0 20px;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Welcome to ReWear</h1>
-    <a href="/login">Login</a>
-    <a href="/signup">Sign Up</a>
-    <p>Welcome to ReWear – A fashion swap platform promoting sustainable fashion!</p>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">Re-Wear</a>
+                <div class="nav-links">
+                    <a href="/about">About</a>
+                    <a href="/how-it-works">How It Works</a>
+                    <a href="/browse">Browse</a>
+                    <a href="/contact">Contact</a>
+                </div>
+                <div class="auth-buttons">
+                    <a href="/login" class="login-btn">Login</a>
+                    <a href="/signup" class="signup-btn">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
 
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Sustainable Fashion Redefined</h1>
+                <p>Join Re-Wear, the premier fashion swap platform where style meets sustainability. Trade your pre-loved clothing items for points and discover unique pieces that express your personal style.</p>
+                <a href="/signup" class="cta-button">Join Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Re-Wear?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Eco-Friendly Fashion</h3>
+                    <p>Reduce waste and give clothing a second life while minimizing your environmental footprint.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Earn Points</h3>
+                    <p>Trade in your quality items for points to spend on new-to-you fashion finds.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Curated Selection</h3>
+                    <p>Discover unique, high-quality pieces that have been carefully vetted by our team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Re-Wear. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
-
 </html>
