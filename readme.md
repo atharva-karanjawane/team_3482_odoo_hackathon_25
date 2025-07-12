@@ -4,6 +4,19 @@ ReWear is a web-based platform designed to promote **sustainable fashion** by al
 
 ---
 
+---
+
+## 🎥 Demo Video
+
+Watch the full walkthrough on YouTube: [https://youtu.be/j0P9yhc0u0g](https://youtu.be/j0P9yhc0u0g)
+
+---
+
+## 🌐 Live Deployment
+
+Try ReWear now on Render: [https://rewear-dziw.onrender.com](https://rewear-dziw.onrender.com)
+
+
 ## 🖼️ Screenshots
 
 ### Landing Page
@@ -181,3 +194,4 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for mor
 
 **Clean your closet. Earn points. Swap sustainably.
 ReWear — Where Fashion Meets Purpose.**
+
