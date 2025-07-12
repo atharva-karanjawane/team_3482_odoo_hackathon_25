@@ -1,7 +1,7 @@
 from datetime import datetime
 import bcrypt
 from flask import Flask, render_template, request, redirect, flash, url_for, session, flash, abort
-from database import create_user, get_user_by_email, SessionLocal, User, get_available_products,SessionLocal, User, Product
+from database import Transaction, create_user, get_user_by_email, SessionLocal, User, get_available_products,SessionLocal, User, Product
 import os
 import secrets
 import smtplib
@@ -70,6 +70,41 @@ def product_detail(pid):
     now = datetime.now()
     return render_template("product_detail.html", product=product, images=images, now = now)
 
+@app.route("/my-orders")
+@login_required
+def my_orders():
+    db = SessionLocal()
+    uid = session.get("uid")
+
+    # All swaps involving the current user
+    all_swaps = db.query(Transaction).filter(
+        (Transaction.requester.has(uid=uid)) |
+        (Transaction.receiver.has(uid=uid))
+    ).order_by(Transaction.created_at.desc()).all()
+
+    # Sent swaps (where user is requester)
+    sent_swaps = db.query(Transaction).filter(
+        Transaction.requester.has(uid=uid)
+    ).order_by(Transaction.created_at.desc()).all()
+
+    # Received swaps (where user is receiver)
+    received_swaps = db.query(Transaction).filter(
+        Transaction.receiver.has(uid=uid)
+    ).order_by(Transaction.created_at.desc()).all()
+
+    # Completed swaps (status = 'completed')
+    completed_swaps = db.query(Transaction).filter(
+        ((Transaction.requester.has(uid=uid)) | (Transaction.receiver.has(uid=uid))) &
+        (Transaction.status == 'completed')
+    ).order_by(Transaction.created_at.desc()).all()
+
+    return render_template(
+        "my_orders.html",
+        all_swaps=all_swaps,
+        sent_swaps=sent_swaps,
+        received_swaps=received_swaps,
+        completed_swaps=completed_swaps
+    )
 
 
 # Sign Up

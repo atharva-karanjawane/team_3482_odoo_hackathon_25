@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-TREME | My Swaps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #e8846b;
+            /* Soft coral */
+            --accent-hover: #d67d65;
+            --background: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #888888;
+            --border-color: #eeeeee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --status-pending: #f0ad4e;
+            --status-completed: #5cb85c;
+            --status-rejected: #d9534f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .user-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-icon:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        /* Profile Popup Styles */
+        .profile-popup {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            border: 1px solid var(--border-color);
+            z-index: 100;
+            display: none;
+        }
+
+        .profile-popup.active {
+            display: block;
+        }
+
+        .popup-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .popup-links {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-link {
+            padding: 12px 15px;
+            text-decoration: none;
+            color: var(--text-medium);
+            font-size: 14px;
+            transition: all 0.2s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .popup-link:last-child {
+            border-bottom: none;
+        }
+
+        .popup-link:hover {
+            background-color: var(--border-color);
+            color: var(--accent-color);
+        }
+
+        /* Search Bar */
+        .search-container {
+            padding: 20px 0;
+        }
+
+        .search-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-icon {
+            padding: 0 15px;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 0;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-button {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .search-button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* My Swaps Styles */
+        .page-title {
+            margin: 30px 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tabs-container {
+            margin-bottom: 30px;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .swap-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .swap-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            background-color: white;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .swap-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+
+        .swap-header {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transaction-id {
+            font-size: 14px;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background-color: var(--status-pending);
+        }
+
+        .status-completed {
+            background-color: var(--status-completed);
+        }
+
+        .status-rejected {
+            background-color: var(--status-rejected);
+        }
+
+        .swap-content {
+            padding: 15px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .swap-product {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-direction {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .product-value {
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .swap-details {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+
+        .user-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            font-size: 12px;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .points-gained {
+            font-weight: 600;
+            color: var(--status-completed);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .swap-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .accept-btn {
+            background-color: var(--status-completed);
+            color: white;
+        }
+
+        .accept-btn:hover {
+            background-color: #4cae4c;
+        }
+
+        .reject-btn {
+            background-color: var(--status-rejected);
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background-color: #c9302c;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-light);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--border-color);
+        }
+
+        .empty-message {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .empty-action {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .empty-action:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .swap-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .swap-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">X-TREME</a>
+                <nav class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Products</a>
+                    <a href="#">My Orders</a>
+                    <a href="#">Profile</a>
+                </nav>
+                <div class="user-actions">
+                    <div class="user-icon" id="profileIcon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-popup" id="profilePopup">
+                        <div class="popup-header">
+                            <div class="user-name">John Doe</div>
+                        </div>
+                        <div class="popup-links">
+                            <a href="#" class="popup-link">Home</a>
+                            <a href="#" class="popup-link">Products</a>
+                            <a href="#" class="popup-link">My Orders</a>
+                            <a href="#" class="popup-link">Profile</a>
+                            <a href="#" class="popup-link">Sign Out</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <div class="search-bar">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <input type="text" class="search-input" placeholder="Search for products...">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <h1 class="page-title">My Swaps</h1>
+
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="all">All Swaps</button>
+                <button class="tab-btn" data-tab="sent">Sent Requests</button>
+                <button class="tab-btn" data-tab="received">Received Requests</button>
+                <button class="tab-btn" data-tab="completed">Completed</button>
+            </div>
+
+            <div class="tab-content active" id="all">
+                <div class="swap-grid">
+                    <!-- Swap Card 1 -->
+                    {% for swap in all_swaps %}
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #{{ swap.tid }}</div>
+                            <div class="status-badge status-{{ swap.status }}">{{ swap.status.capitalize() }}</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">You Offered</div>
+                                <div class="product-image">
+                                    <img
+                                        src="{{ swap.requester_product.images[0].image_url if swap.requester_product.images else '' }}" />
+                                </div>
+                                <div class="product-name">{{ swap.requester_product.title }}</div>
+                                <div class="product-value">Value: {{ swap.requester_product.point_value }} points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">You Requested</div>
+                                <div class="product-image">
+                                    <img
+                                        src="{{ swap.receiver_product.images[0].image_url if swap.receiver_product.images else '' }}" />
+                                </div>
+                                <div class="product-name">{{ swap.receiver_product.title }}</div>
+                                <div class="product-value">Value: {{ swap.receiver_product.point_value }} points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-info">Swap with: User #{{ swap.other_user_id }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                    <!-- Swap Card 4 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12348</div>
+                            <div class="status-badge status-pending">Pending</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">You Requested</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Summer Dress</div>
+                                <div class="product-value">Value: 60 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">You Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Designer Bag</div>
+                                <div class="product-value">Value: 65 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #567</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="sent">
+                <div class="swap-grid">
+                    <!-- Sent Request 1 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12345</div>
+                            <div class="status-badge status-pending">Pending</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">You Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Vintage Denim Jacket</div>
+                                <div class="product-value">Value: 50 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">You Requested</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Designer Sunglasses</div>
+                                <div class="product-value">Value: 45 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #789</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sent Request 2 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12347</div>
+                            <div class="status-badge status-rejected">Rejected</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">You Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Casual T-Shirt</div>
+                                <div class="product-value">Value: 25 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">You Requested</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Designer Scarf</div>
+                                <div class="product-value">Value: 40 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #123</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="received">
+                <div class="swap-grid">
+                    <!-- Received Request 1 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12348</div>
+                            <div class="status-badge status-pending">Pending</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">They Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Summer Dress</div>
+                                <div class="product-value">Value: 60 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">They Requested</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Designer Bag</div>
+                                <div class="product-value">Value: 65 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #567</div>
+                            </div>
+                            <div class="swap-actions">
+                                <button class="action-btn accept-btn">Accept</button>
+                                <button class="action-btn reject-btn">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Received Request 2 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12349</div>
+                            <div class="status-badge status-pending">Pending</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">They Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Sneakers</div>
+                                <div class="product-value">Value: 55 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">They Requested</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Formal Shirt</div>
+                                <div class="product-value">Value: 45 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #321</div>
+                            </div>
+                            <div class="swap-actions">
+                                <button class="action-btn accept-btn">Accept</button>
+                                <button class="action-btn reject-btn">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="completed">
+                <div class="swap-grid">
+                    <!-- Completed Swap 1 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12346</div>
+                            <div class="status-badge status-completed">Completed</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">You Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Leather Boots</div>
+                                <div class="product-value">Value: 75 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">You Received</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Winter Coat</div>
+                                <div class="product-value">Value: 80 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #456</div>
+                            </div>
+                            <div class="points-gained">
+                                <i class="fas fa-plus-circle"></i> 5 points
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completed Swap 2 -->
+                    <div class="swap-card">
+                        <div class="swap-header">
+                            <div class="transaction-id">TID: #12350</div>
+                            <div class="status-badge status-completed">Completed</div>
+                        </div>
+                        <div class="swap-content">
+                            <div class="swap-product">
+                                <div class="product-direction">You Received</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Silk Scarf</div>
+                                <div class="product-value">Value: 35 points</div>
+                            </div>
+                            <div class="swap-product">
+                                <div class="product-direction">You Offered</div>
+                                <div class="product-image">
+                                    <p>Product Image</p>
+                                </div>
+                                <div class="product-name">Casual Pants</div>
+                                <div class="product-value">Value: 30 points</div>
+                            </div>
+                        </div>
+                        <div class="swap-details">
+                            <div class="user-detail">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="user-info">Swap with: User #654</div>
+                            </div>
+                            <div class="points-gained">
+                                <i class="fas fa-plus-circle"></i> 5 points
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Profile popup functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const profileIcon = document.getElementById('profileIcon');
+            const profilePopup = document.getElementById('profilePopup');
+
+            profileIcon.addEventListener('click', function () {
+                profilePopup.classList.toggle('active');
+            });
+
+            // Close popup when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!profileIcon.contains(event.target) && !profilePopup.contains(event.target)) {
+                    profilePopup.classList.remove('active');
+                }
+            });
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Show corresponding content
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
