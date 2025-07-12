@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}X-TREME | Fashion & Lifestyle{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --accent-color: #e8846b; /* Soft coral */
+            --accent-color: #e8846b;
+            /* Soft coral */
             --accent-hover: #d67d65;
             --background: #ffffff;
             --text-dark: #333333;
@@ -20,13 +24,13 @@
             --shadow-color: rgba(0, 0, 0, 0.05);
             --footer-bg: #f8f8f8;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Montserrat', sans-serif;
             background: var(--background);
@@ -42,20 +46,20 @@
             padding: 0 20px;
             width: 100%;
         }
-        
+
         /* Header Styles */
         header {
             padding: 20px 0;
             border-bottom: 1px solid var(--border-color);
             background-color: white;
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-family: 'Montserrat', sans-serif;
             font-size: 24px;
@@ -65,12 +69,12 @@
             text-decoration: none;
             text-transform: uppercase;
         }
-        
+
         .nav-menu {
             display: flex;
             gap: 20px;
         }
-        
+
         .nav-link {
             color: var(--text-medium);
             text-decoration: none;
@@ -80,21 +84,21 @@
             letter-spacing: 1px;
             transition: color 0.2s;
         }
-        
+
         .nav-link:hover {
             color: var(--accent-color);
         }
-        
+
         .nav-link.active {
             color: var(--accent-color);
         }
-        
+
         .user-actions {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
+
         .user-icon {
             width: 36px;
             height: 36px;
@@ -108,17 +112,17 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        
+
         .user-icon:hover {
             background-color: var(--accent-color);
             color: white;
             border-color: var(--accent-color);
         }
-        
+
         .cart-icon {
             position: relative;
         }
-        
+
         .cart-count {
             position: absolute;
             top: -5px;
@@ -133,7 +137,7 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .mobile-menu-toggle {
             display: none;
             background: none;
@@ -142,12 +146,12 @@
             font-size: 20px;
             cursor: pointer;
         }
-        
+
         /* Main Content */
         main {
             flex: 1;
         }
-        
+
         /* Footer Styles */
         footer {
             background-color: var(--footer-bg);
@@ -155,46 +159,46 @@
             border-top: 1px solid var(--border-color);
             margin-top: auto;
         }
-        
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             margin-bottom: 30px;
         }
-        
+
         .footer-column h3 {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 15px;
             color: var(--text-dark);
         }
-        
+
         .footer-links {
             list-style: none;
         }
-        
+
         .footer-links li {
             margin-bottom: 8px;
         }
-        
+
         .footer-links a {
             color: var(--text-medium);
             text-decoration: none;
             font-size: 14px;
             transition: color 0.2s;
         }
-        
+
         .footer-links a:hover {
             color: var(--accent-color);
         }
-        
+
         .social-links {
             display: flex;
             gap: 15px;
             margin-top: 15px;
         }
-        
+
         .social-link {
             width: 32px;
             height: 32px;
@@ -207,13 +211,13 @@
             color: var(--text-medium);
             transition: all 0.2s;
         }
-        
+
         .social-link:hover {
             background-color: var(--accent-color);
             color: white;
             border-color: var(--accent-color);
         }
-        
+
         .footer-bottom {
             text-align: center;
             padding-top: 20px;
@@ -221,37 +225,37 @@
             color: var(--text-light);
             font-size: 12px;
         }
-        
+
         /* Flash Messages */
         .flash-messages {
             padding: 10px 0;
         }
-        
+
         .flash-message {
             padding: 10px 15px;
             border-radius: 4px;
             margin-bottom: 10px;
         }
-        
+
         .flash-success {
             background-color: #d4edda;
             border: 1px solid #c3e6cb;
             color: #155724;
         }
-        
+
         .flash-error {
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
             color: #721c24;
         }
-        
+
         /* Section Title (for reuse) */
         .section-title {
             text-align: center;
             position: relative;
             margin: 30px 0;
         }
-        
+
         .section-title span {
             background-color: white;
             padding: 0 15px;
@@ -262,7 +266,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-        
+
         .section-title:before {
             content: "";
             position: absolute;
@@ -273,14 +277,14 @@
             background-color: var(--border-color);
             z-index: 0;
         }
-        
+
         /* Responsive Adjustments */
         @media (max-width: 992px) {
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        
+
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -295,58 +299,62 @@
                 z-index: 100;
                 text-align: center;
             }
-            
+
             .nav-menu.active {
                 display: flex;
             }
-            
+
             .mobile-menu-toggle {
                 display: block;
             }
         }
-        
+
         @media (max-width: 576px) {
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .logo {
                 font-size: 20px;
             }
         }
-        
-
     </style>
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
     <header>
         <div class="container">
             <div class="header-content">
                 <a href="{{ url_for('index') }}" class="logo">X-TREME</a>
-                
+
                 <nav class="nav-menu" id="navMenu">
-                    <a href="{{ url_for('landing_page') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a>
+                    <a href="{{ url_for('landing_page') }}"
+                        class="nav-link {% if request.path == url_for('index') %}active{% endif %}">Home</a>
                     <a href="#" class="nav-link">Women</a>
                     <a href="#" class="nav-link">Men</a>
                     <a href="#" class="nav-link">Accessories</a>
                     <a href="#" class="nav-link">Sale</a>
+                    {% if current_user.role == 'admin' %}
+                    <a href="{{ url_for('admin_panel') }}">Admin Panel</a>
+                    {% endif %}
+
                 </nav>
-                
+
                 <div class="user-actions">
                     <button class="mobile-menu-toggle" id="mobileMenuToggle">
                         <i class="fas fa-bars"></i>
                     </button>
-                    
+
                     <a href="{{ url_for('my_orders') }}">
-                    <div class="user-icon cart-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                        {% if session.get('cart_count', 0) > 0 %}
-                        <span class="cart-count">{{ session.get('cart_count', 0) }}</span>
-                        {% endif %}
-                    </div>
+                        <div class="user-icon cart-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                            {% if session.get('cart_count', 0) > 0 %}
+                            <span class="cart-count">{{ session.get('cart_count', 0) }}</span>
+                            {% endif %}
+                        </div>
                     </a>
-                    
+
                     <div class="user-icon">
                         {% if session.get('uid') %}
                         <a href="{{ url_for('profile') }}" style="color: inherit;">
@@ -362,27 +370,27 @@
             </div>
         </div>
     </header>
-    
+
     <main>
         <div class="container">
             <!-- Flash Messages -->
             {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash-message flash-{{ category if category else 'error' }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="flash-message flash-{{ category if category else 'error' }}">
+                    {{ message }}
                 </div>
-                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
             {% endwith %}
-            
+
             <!-- Content from child templates will be inserted here -->
             {% block content %}{% endblock %}
         </div>
     </main>
-    
+
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -396,7 +404,7 @@
                         <li><a href="#">Sale</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h3>Information</h3>
                     <ul class="footer-links">
@@ -406,7 +414,7 @@
                         <li><a href="#">FAQs</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h3>Customer Service</h3>
                     <ul class="footer-links">
@@ -416,7 +424,7 @@
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="footer-column">
                     <h3>Connect With Us</h3>
                     <p style="color: var(--text-medium); font-size: 14px; margin-bottom: 15px;">
@@ -430,32 +438,33 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; {{ now.year }} X-TREME Fashion. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
-    
+
     <script>
         // Mobile menu toggle
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+        document.getElementById('mobileMenuToggle').addEventListener('click', function () {
             document.getElementById('navMenu').classList.toggle('active');
         });
-        
+
         // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
+        document.addEventListener('click', function (event) {
             const navMenu = document.getElementById('navMenu');
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(event.target) && 
+
+            if (navMenu.classList.contains('active') &&
+                !navMenu.contains(event.target) &&
                 !mobileMenuToggle.contains(event.target)) {
                 navMenu.classList.remove('active');
             }
         });
     </script>
-    
+
     {% block scripts %}{% endblock %}
 </body>
+
 </html>

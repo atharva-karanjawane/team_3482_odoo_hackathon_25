@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -484,36 +487,6 @@
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">X-TREME</a>
-                <nav class="nav-links">
-                    <a href="#">Home</a>
-                    <a href="#">Products</a>
-                    <a href="#">My Orders</a>
-                    <a href="#">Profile</a>
-                </nav>
-                <div class="user-actions">
-                    <div class="user-icon" id="profileIcon">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="profile-popup" id="profilePopup">
-                        <div class="popup-header">
-                            <div class="user-name">John Doe</div>
-                        </div>
-                        <div class="popup-links">
-                            <a href="#" class="popup-link">Home</a>
-                            <a href="#" class="popup-link">Products</a>
-                            <a href="#" class="popup-link">My Orders</a>
-                            <a href="#" class="popup-link">Profile</a>
-                            <a href="#" class="popup-link">Sign Out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <div class="container">
         <div class="search-container">
@@ -882,3 +855,5 @@
 </body>
 
 </html>
+
+{% endblock %}

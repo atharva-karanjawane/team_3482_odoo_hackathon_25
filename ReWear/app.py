@@ -9,6 +9,7 @@ from email.message import EmailMessage
 from dotenv import load_dotenv
 from functools import wraps
 from sqlalchemy.orm import joinedload
+from flask_login import current_user
 
 load_dotenv()
 
@@ -31,6 +32,22 @@ def send_recovery_email(to_email, code):
         smtp.login(EMAIL_USER, EMAIL_PASS)
         smtp.send_message(msg)
 
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        uid = session.get("uid")
+        if not uid:
+            flash("Login required", "warning")
+            return redirect(url_for("login"))
+
+        db = SessionLocal()
+        user = db.query(User).filter_by(uid=uid).first()
+        db.close()
+        if not user or user.role != "admin":
+            flash("Access denied: Admins only", "danger")
+            return redirect(url_for("landing_page"))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def login_required(f):
@@ -47,6 +64,14 @@ def login_required(f):
 def index():
     return render_template("index.html")  # Show about, login, signup buttons
 
+@app.route("/admin")
+@admin_required
+def admin_panel():
+    db = SessionLocal()
+    users = db.query(User).all()
+    db.close()
+    return render_template("admin_panel.html", users=users)
+
 @app.route("/home")
 @login_required
 def landing_page():
@@ -57,8 +82,12 @@ def landing_page():
     products = db.query(Product).options(joinedload(Product.images)).filter(
         Product.status == "available"
     ).order_by(Product.created_at.desc()).limit(4).all()
-
-    return render_template("landing_page.html", products=products, now=now)
+    return render_template(
+        "landing_page.html",
+        products=products,
+        now=now,
+        current_user=current_user
+    )
 
 @app.route("/product/<int:pid>")
 def product_detail(pid):
@@ -98,12 +127,15 @@ def my_orders():
         (Transaction.status == 'completed')
     ).order_by(Transaction.created_at.desc()).all()
 
+    now = datetime.now()
+
     return render_template(
         "my_orders.html",
         all_swaps=all_swaps,
         sent_swaps=sent_swaps,
         received_swaps=received_swaps,
-        completed_swaps=completed_swaps
+        completed_swaps=completed_swaps,
+        now=now
     )
 
 
@@ -221,6 +253,6 @@ def logout():
     session.clear()
     return redirect("/")
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+     app.run(host='0.0.0.0', port=5000, debug=True)
+
