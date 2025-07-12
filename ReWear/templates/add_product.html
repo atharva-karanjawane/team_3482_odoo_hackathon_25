@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-TREME | Add Product</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-color: #e8846b; /* Soft coral */
+            --accent-hover: #d67d65;
+            --background: #ffffff;
+            --text-dark: #333333;
+            --text-medium: #555555;
+            --text-light: #888888;
+            --border-color: #eeeeee;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --status-pending: #f0ad4e;
+            --status-completed: #5cb85c;
+            --status-rejected: #d9534f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #f5f5f5;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background-color: white;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 8px 15px;
+            padding-right: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            width: 200px;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            width: 250px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .user-icon {
+            color: var(--text-medium);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .user-icon:hover {
+            color: var(--accent-color);
+        }
+
+        /* Profile Popup */
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-popup {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-top: 10px;
+            z-index: 100;
+            display: none;
+        }
+
+        .profile-popup.active {
+            display: block;
+        }
+
+        .profile-popup::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid white;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .profile-name {
+            font-weight: 500;
+        }
+
+        .profile-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .profile-link {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .profile-link:hover {
+            color: var(--accent-color);
+        }
+
+        .profile-link.sign-out {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+            color: var(--status-rejected);
+        }
+
+        .profile-link.sign-out:hover {
+            color: #c9302c;
+        }
+
+        /* Page Title */
+        .page-title {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .page-title h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            font-size: 16px;
+            color: var(--text-medium);
+        }
+
+        /* Form Styles */
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+            padding: 0 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-help {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Image Upload */
+        .image-upload-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .image-upload-box {
+            width: 150px;
+            height: 150px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-upload-box:hover {
+            border-color: var(--accent-color);
+        }
+
+        .image-upload-box.primary {
+            border-color: var(--accent-color);
+        }
+
+        .image-upload-box.primary::after {
+            content: 'Primary';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 12px;
+            padding: 4px;
+            text-align: center;
+        }
+
+        .image-upload-box i {
+            font-size: 30px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+
+        .image-upload-box span {
+            font-size: 12px;
+            color: var(--text-medium);
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .image-upload-box input[type="file"] {
+            display: none;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .image-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--status-rejected);
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        /* Buttons */
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--text-medium);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        /* Point Value Slider */
+        .point-value-container {
+            margin-top: 15px;
+        }
+
+        .point-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        .point-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .point-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+            border: none;
+        }
+
+        .point-value-display {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-medium);
+        }
+
+        .point-value {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+            }
+            
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 15px;
+            }
+            
+            .form-group {
+                flex: 100%;
+            }
+            
+            .image-upload-container {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">X-TREME</a>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#" class="nav-link">Products</a>
+                <a href="#" class="nav-link">My Orders</a>
+                <a href="#" class="nav-link active">Add Product</a>
+            </div>
+            
+            <div class="user-actions">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <div class="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+                <div class="profile-container">
+                    <div class="user-icon" id="profileToggle">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    
+                    <div class="profile-popup" id="profilePopup">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="profile-name">John Doe</div>
+                        </div>
+                        
+                        <div class="profile-links">
+                            <a href="#" class="profile-link">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                            <a href="#" class="profile-link">
+                                <i class="fas fa-tshirt"></i> Products
+                            </a>
+                            <a href="#" class="profile-link">
+                                <i class="fas fa-shopping-bag"></i> My Orders
+                            </a>
+                            <a href="#" class="profile-link">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                            <a href="#" class="profile-link sign-out">
+                                <i class="fas fa-sign-out-alt"></i> Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>Add New Product</h1>
+            <p>Share your clothing items with the community</p>
+        </div>
+        
+        <form class="form-container">
+            <div class="form-section">
+                <h2 class="form-section-title">Product Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="title" class="form-label">Title *</label>
+                        <input type="text" id="title" name="title" class="form-input" placeholder="e.g. Blue Denim Jacket" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category" class="form-label">Category *</label>
+                        <select id="category" name="category" class="form-select" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Tops">Tops</option>
+                            <option value="Bottoms">Bottoms</option>
+                            <option value="Dresses">Dresses</option>
+                            <option value="Outerwear">Outerwear</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subcategory" class="form-label">Subcategory *</label>
+                        <select id="subcategory" name="subcategory" class="form-select" required>
+                            <option value="" disabled selected>Select a subcategory</option>
+                            <!-- Subcategories will be populated based on category selection -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="size" class="form-label">Size *</label>
+                        <select id="size" name="size" class="form-select" required>
+                            <option value="" disabled selected>Select a size</option>
+                            <option value="XS">XS</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="condition" class="form-label">Condition *</label>
+                        <select id="condition" name="condition" class="form-select" required>
+                            <option value="" disabled selected>Select condition</option>
+                            <option value="New with tags">New with tags</option>
+                            <option value="New without tags">New without tags</option>
+                            <option value="Very good">Very good</option>
+                            <option value="Good">Good</option>
+                            <option value="Fair">Fair</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="point_value" class="form-label">Point Value *</label>
+                        <div class="point-value-container">
+                            <input type="range" id="point_value" name="point_value" class="point-slider" min="10" max="100" step="5" value="50">
+                            <div class="point-value-display">
+                                <span>10 points</span>
+                                <span class="point-value" id="pointValueDisplay">50 points</span>
+                                <span>100 points</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 100%;">
+                        <label for="description" class="form-label">Description *</label>
+                        <textarea id="description" name="description" class="form-textarea" placeholder="Describe your item in detail. Include information about fabric, fit, and any special features." required></textarea>
+                        <div class="form-help">Minimum 50 characters</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2 class="form-section-title">Product Images</h2>
+                <p class="form-help" style="margin-bottom: 15px;">Upload at least one image of your product. The first image will be the primary image shown in listings.</p>
+                
+                <div class="image-upload-container">
+                    <div class="image-upload-box primary">
+                        <i class="fas fa-camera"></i>
+                        <span>Primary Image</span>
+                        <input type="file" id="primaryImage" accept="image/*">
+                    </div>
+                    
+                    <div class="image-upload-box">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Image</span>
+                        <input type="file" id="image2" accept="image/*">
+                    </div>
+                    
+                    <div class="image-upload-box">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Image</span>
+                        <input type="file" id="image3" accept="image/*">
+                    </div>
+                    
+                    <div class="image-upload-box">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Image</span>
+                        <input type="file" id="image4" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Profile Popup Toggle
+            const profileToggle = document.getElementById('profileToggle');
+            const profilePopup = document.getElementById('profilePopup');
+            
+            profileToggle.addEventListener('click', function() {
+                profilePopup.classList.toggle('active');
+            });
+            
+            document.addEventListener('click', function(event) {
+                if (!profileToggle.contains(event.target) && !profilePopup.contains(event.target)) {
+                    profilePopup.classList.remove('active');
+                }
+            });
+            
+            // Point Value Slider
+            const pointSlider = document.getElementById('point_value');
+            const pointValueDisplay = document.getElementById('pointValueDisplay');
+            
+            pointSlider.addEventListener('input', function() {
+                pointValueDisplay.textContent = this.value + ' points';
+            });
+            
+            // Category and Subcategory Relationship
+            const categorySelect = document.getElementById('category');
+            const subcategorySelect = document.getElementById('subcategory');
+            
+            const subcategories = {
+                'Tops': ['T-Shirt', 'Blouse', 'Shirt', 'Tank Top', 'Sweater', 'Hoodie'],
+                'Bottoms': ['Jeans', 'Pants', 'Shorts', 'Skirts', 'Leggings'],
+                'Dresses': ['Mini Dress', 'Midi Dress', 'Maxi Dress', 'Formal Dress', 'Casual Dress'],
+                'Outerwear': ['Jacket', 'Coat', 'Blazer', 'Cardigan', 'Vest']
+            };
+            
+            categorySelect.addEventListener('change', function() {
+                // Clear existing options
+                subcategorySelect.innerHTML = '<option value="" disabled selected>Select a subcategory</option>';
+                
+                // Populate subcategories based on selected category
+                const selectedCategory = this.value;
+                if (selectedCategory && subcategories[selectedCategory]) {
+                    subcategories[selectedCategory].forEach(function(subcategory) {
+                        const option = document.createElement('option');
+                        option.value = subcategory;
+                        option.textContent = subcategory;
+                        subcategorySelect.appendChild(option);
+                    });
+                }
+            });
+            
+            // Image Upload Preview
+            const imageInputs = document.querySelectorAll('input[type="file"]');
+            
+            imageInputs.forEach(function(input) {
+                input.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        const uploadBox = this.parentElement;
+                        
+                        reader.onload = function(e) {
+                            // Remove existing preview if any
+                            const existingPreview = uploadBox.querySelector('.image-preview');
+                            const existingRemove = uploadBox.querySelector('.image-remove');
+                            
+                            if (existingPreview) {
+                                uploadBox.removeChild(existingPreview);
+                            }
+                            
+                            if (existingRemove) {
+                                uploadBox.removeChild(existingRemove);
+                            }
+                            
+                            // Create and add image preview
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('image-preview');
+                            uploadBox.appendChild(img);
+                            
+                            // Create and add remove button
+                            const removeBtn = document.createElement('div');
+                            removeBtn.classList.add('image-remove');
+                            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                            uploadBox.appendChild(removeBtn);
+                            
+                            // Hide the icon and text
+                            const icon = uploadBox.querySelector('i:not(.fa-times)');
+                            const span = uploadBox.querySelector('span');
+                            
+                            if (icon) icon.style.display = 'none';
+                            if (span) span.style.display = 'none';
+                            
+                            // Add remove functionality
+                            removeBtn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                uploadBox.removeChild(img);
+                                uploadBox.removeChild(removeBtn);
+                                input.value = '';
+                                
+                                if (icon) icon.style.display = 'block';
+                                if (span) span.style.display = 'block';
+                            });
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    }
+                });
+                
+                const uploadBox = input.parentElement;
+                uploadBox.addEventListener('click', function() {
+                    input.click();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
