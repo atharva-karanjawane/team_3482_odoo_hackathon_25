@@ -49,8 +49,9 @@ def index():
 @app.route("/home")
 @login_required
 def landing_page():
+    now = datetime.now()
     products = get_available_products(limit=4)
-    return render_template("landing_page.html", products=products)
+    return render_template("landing_page.html", products=products, now=now)
 
 
 # Sign Up
