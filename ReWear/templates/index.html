@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>ReWear</title></head>
+<body>
+    <h1>Welcome to ReWear</h1>
+    {% if session.name %}
+        <p>Hello, {{ session.name }}!</p>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a> |
+        <a href="/signup">Sign Up</a>
+    {% endif %}
+</body>
+</html>
